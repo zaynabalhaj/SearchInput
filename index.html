@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Search</h2>
+    <input type="text" placeholder="Search">
+    <ul class="results">
+
+    </ul>
+</body>
+
+<script>
+    const articles=["Grid Search Name", "Why is there a grid"]; // dummy example will be replaced
+
+    function findResults(wordtomatch, article){
+        return articles.filter(item => {
+            const regex = new RegExp(wordtomatch, 'gi');
+            // return if the item includes the word search
+            return item.match(regex);
+        })
+
+    }
+    function displayResults(){
+        const matchedResults = findResults(this.value, articles);
+        const html = matchedResults.map(item => {
+            const regex = new RegExp(this.value, 'gi');
+            const modifiedresult = item.replace(regex, `<span class="target">${this.value}</span>`);
+            return `
+             <li>
+                <span>${modifiedresult}<span>
+             </li>
+            `;
+        }).join('');
+        results.innerHTML = html;
+
+    }
+    const searchInput = document.querySelector("input");
+    const results = document.querySelector(".results");
+    searchInput.addEventListener('change', displayResults);
+    searchInput.addEventListener('keyup', displayResults);
+</script>
+</html>
